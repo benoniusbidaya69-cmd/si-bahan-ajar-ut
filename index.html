@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MESRILAWATI FINOWAA | Sistem Informasi Bahan Ajar UT</title>
+    
+    <!-- Framework Tailwind CSS & Font Awesome Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Link ke file CSS eksternal -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- ==========================================
+         HALAMAN LOGIN
+    =========================================== -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center p-4 bg-slate-100">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md modal-enter">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-extrabold text-blue-800 tracking-tight">MESRILAWATI FINOWAA</h1>
+                <p class="text-slate-500 font-medium">Sistem Informasi Bahan Ajar UT</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Email / Username</label>
+                    <input type="email" id="email" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="mesrilawati99@gmail.com" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="w-full btn-gradient text-white py-3 rounded-xl font-bold text-lg shadow-lg">Login ke Sistem</button>
+            </form>
+
+            <div class="mt-6 flex justify-between text-sm font-medium">
+                <button onclick="showSimpleModal('Lupa Password', 'Silakan hubungi administrator IT UT untuk reset password Anda.')" class="text-blue-600 hover:underline">Lupa Password?</button>
+                <button onclick="showSimpleModal('Daftar Akun', 'Pendaftaran hanya dapat dilakukan melalui Bagian Kepegawaian.')" class="text-slate-600 hover:underline">Belum punya akun?</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         DASHBOARD UTAMA
+    =========================================== -->
+    <div id="main-app" class="hidden min-h-screen flex">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col hidden md:flex">
+            <div class="p-6 text-center border-b border-slate-800">
+                <h2 class="text-lg font-bold tracking-tighter">MESRILAWATI FINOWAA</h2>
+                <span class="text-xs text-slate-400">Inventory System v1.0</span>
+            </div>
+            <nav class="flex-1 p-4 space-y-2 mt-4">
+                <a href="#" onclick="switchPage('dashboard')" class="nav-link active">
+                    <i class="fas fa-home w-5"></i> <span>Dashboard</span>
+                </a>
+                <a href="#" onclick="switchPage('stok')" class="nav-link">
+                    <i class="fas fa-boxes w-5"></i> <span>Stok Bahan Ajar</span>
+                </a>
+                <a href="#" onclick="switchPage('tracking')" class="nav-link">
+                    <i class="fas fa-truck-fast w-5"></i> <span>Tracking Service</span>
+                </a>
+                <div class="pt-4 pb-2 text-xs font-bold text-slate-500 uppercase px-3">Laporan</div>
+                <a href="#" onclick="switchPage('monitoring')" class="nav-link">
+                    <i class="fas fa-chart-line w-5"></i> <span>Monitoring</span>
+                </a>
+                <a href="#" onclick="switchPage('histori')" class="nav-link">
+                    <i class="fas fa-history w-5"></i> <span>Histori</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-slate-800">
+                <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 p-3 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition">
+                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10">
+                <div class="flex items-center">
+                    <button class="md:hidden mr-4 text-slate-600"><i class="fas fa-bars"></i></button>
+                    <h2 id="page-title" class="font-bold text-slate-800 text-lg">Dashboard</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="hidden sm:block text-right">
+                        <p id="digital-clock" class="text-xs font-mono text-slate-500">00:00:00</p>
+                        <p id="greeting" class="text-sm font-semibold text-slate-700">Selamat Datang</p>
+                    </div>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-slate-100 hover:bg-slate-200 transition">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">U</div>
+                </div>
+            </header>
+
+            <div id="content-area" class="flex-1 overflow-y-auto p-6">
+
+                <!-- PAGE: DASHBOARD -->
+                <section id="page-dashboard" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                            <p class="text-sm text-slate-500">Total Stok</p>
+                            <h3 class="text-2xl font-bold mt-1">1,240</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                            <p class="text-sm text-slate-500">Pengiriman Aktif</p>
+                            <h3 class="text-2xl font-bold mt-1">45</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                            <p class="text-sm text-slate-500">Selesai Hari Ini</p>
+                            <h3 class="text-2xl font-bold mt-1">128</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 card-hover">
+                            <p class="text-sm text-slate-500">Permintaan Baru</p>
+                            <h3 class="text-2xl font-bold mt-1">8</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE: STOK -->
+                <section id="page-stok" class="hidden space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-slate-800">Manajemen Inventaris</h3>
+                        <button onclick="toggleModal('modal-stok')" class="btn-gradient px-6 py-2 rounded-xl font-bold">Tambah Bahan Ajar</button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b">
+                                <tr>
+                                    <th class="px-6 py-4">No</th>
+                                    <th class="px-6 py-4">Kode</th>
+                                    <th class="px-6 py-4">Nama Bahan Ajar</th>
+                                    <th class="px-6 py-4">Stok</th>
+                                    <th class="px-6 py-4 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-stok-body" class="divide-y"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- PAGE: TRACKING -->
+                <section id="page-tracking" class="hidden space-y-6">
+                    <div class="max-w-2xl mx-auto text-center py-10">
+                        <h3 class="text-2xl font-bold">Lacak Pengiriman</h3>
+                        <div class="mt-8 flex shadow-xl rounded-2xl overflow-hidden border">
+                            <input type="text" id="input-do" class="flex-1 px-6 py-4 outline-none" placeholder="Contoh: DO-2026-001">
+                            <button onclick="trackDO()" class="bg-blue-600 text-white px-8 font-bold">Cari</button>
+                        </div>
+                    </div>
+                    <div id="tracking-result" class="hidden max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-sm border">
+                        <div class="flex justify-between border-b pb-6 mb-6">
+                            <h4 class="font-bold text-lg" id="res-mhs">Nama Mahasiswa</h4>
+                            <div id="res-status" class="px-4 py-2 rounded-full font-bold text-sm uppercase">Status</div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">Nomor DO</p>
+                                <p id="res-do" class="font-semibold mt-1 text-slate-700"></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">Ekspedisi</p>
+                                <p id="res-ekspedisi" class="font-semibold mt-1 text-slate-700"></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">Tanggal</p>
+                                <p id="res-tanggal" class="font-semibold mt-1 text-slate-700"></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">Paket</p>
+                                <p id="res-paket" class="font-semibold mt-1 text-slate-700"></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">Pembayaran</p>
+                                <p id="res-bayar" class="font-semibold mt-1 text-slate-700"></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">Progress</p>
+                                <p id="res-percent" class="font-semibold mt-1 text-slate-700"></p>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                                <div id="res-progress-bar" class="bg-blue-600 h-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PAGE: MONITORING -->
+                <section id="page-monitoring" class="hidden text-center py-20">
+                    <i class="fas fa-chart-line text-4xl text-slate-300 mb-4"></i>
+                    <p class="text-slate-400 font-medium">Monitoring Progress...</p>
+                </section>
+
+                <!-- PAGE: HISTORI -->
+                <section id="page-histori" class="hidden text-center py-20">
+                    <i class="fas fa-history text-4xl text-slate-300 mb-4"></i>
+                    <p class="text-slate-400 font-medium">Histori Transaksi...</p>
+                </section>
+
+            </div>
+
+            <footer class="p-6 bg-white border-t text-center text-sm text-slate-500">
+                &copy; 2026 <strong>MESRILAWATI FINOWAA</strong> | Sistem Informasi Bahan Ajar UT
+            </footer>
+        </main>
+    </div>
+
+    <!-- ==========================================
+         MODAL: TAMBAH STOK
+    =========================================== -->
+    <div id="modal-stok" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl modal-enter overflow-hidden">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h4 class="font-bold text-lg">Tambah Stok</h4>
+                <button onclick="toggleModal('modal-stok')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <input type="text" id="stok-kode" class="w-full px-4 py-2 border rounded-lg" placeholder="Kode Buku">
+                <input type="text" id="stok-nama" class="w-full px-4 py-2 border rounded-lg" placeholder="Nama Buku">
+                <input type="number" id="stok-jumlah" class="w-full px-4 py-2 border rounded-lg" placeholder="Jumlah">
+            </div>
+            <div class="p-6 bg-slate-50 flex justify-end space-x-3">
+                <button onclick="toggleModal('modal-stok')" class="px-6 py-2 text-slate-600 hover:text-slate-800">Batal</button>
+                <button onclick="addStokToTable()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         TOAST NOTIFICATION
+    =========================================== -->
+    <div id="toast" class="fixed bottom-10 right-10 transform translate-y-20 opacity-0 bg-slate-800 text-white px-6 py-3 rounded-xl shadow-2xl transition-all duration-300 z-[100]">
+        <span id="toast-msg"></span>
+    </div>
+
+    <!-- ==========================================
+         MODAL: PESAN SEDERHANA
+    =========================================== -->
+    <div id="simple-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-sm shadow-2xl p-6 text-center modal-enter">
+            <h4 id="simple-modal-title" class="text-xl font-bold mb-2"></h4>
+            <p id="simple-modal-body" class="text-slate-500 mb-6"></p>
+            <button onclick="toggleModal('simple-modal')" class="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition">Tutup</button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SCRIPT FILES (folder js/)
+    =========================================== -->
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
