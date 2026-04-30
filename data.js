@@ -1,9 +1,9 @@
 /**
  * DATA STORAGE - MESRILAWATI FINOWAA
- * File ini khusus untuk menyimpan data mentah/dummy
+ * File ini menyimpan data statis untuk stok bahan ajar dan informasi pelacakan.
  */
 
-// Data Stok Bahan Ajar
+// 1. Data Stok Bahan Ajar (Variable: dataBahanAjar)
 const dataBahanAjar = [
     { kode: "BA001", nama: "Matematika", stok: 50 },
     { kode: "BA002", nama: "Bahasa Inggris", stok: 35 },
@@ -11,7 +11,7 @@ const dataBahanAjar = [
     { kode: "BA004", nama: "Akuntansi", stok: 15 }
 ];
 
-// Data Tracking Pelacakan DO
+// 2. Data Tracking Pelacakan DO (Variable: dummyTracking)
 const dummyTracking = {
     "DO-2026-001": { 
         nama: "Andi Saputra", 
